@@ -11,5 +11,5 @@ See [this notebook](inst/R-projects-test-example.ipynb) for a sweet demo.
 ## Installation
 
 ```
-devtools::install_github('datacamp/IRkernel.testthat')
+devtools::install_github('datacamp/IRkernel.testthat', auth_token = "TOKEN")
 ```
