@@ -1,0 +1,10 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# vim swapfiles
+*.swp
+
+# ipython notebook checkpoints
+.ipynb_checkpoints
