@@ -7,10 +7,8 @@
 ProjectReporter <- R6::R6Class("ProjectReporter", inherit = testthat::ListReporter,
   public = list(
     all_tests = NULL,
-    comm = NULL,
-    initialize = function(..., comm) {
+    initialize = function(...) {
       super$initialize(...)
-      self$comm <- comm
       self$all_tests = testthat:::Stack$new()
     },
     end_reporter = function() {
@@ -30,8 +28,10 @@ ProjectReporter <- R6::R6Class("ProjectReporter", inherit = testthat::ListReport
                 summary = summary,
                 tests = test_res
                 )
-
-        self$comm$send(payload)
+        # Note: may want to use repr package instead
+        IRdisplay::publish_mimebundle(list(
+                'application/json' = jsonlite::toJSON(payload, auto_unbox = TRUE)
+                ))
 
         payload
     },
@@ -63,11 +63,10 @@ ProjectReporter <- R6::R6Class("ProjectReporter", inherit = testthat::ListReport
 #'
 #' @export
 run_tests <- function(test_expr) {
-    comm <- IRkernel::comm_manager()$new_comm('dc_project')
-    comm$open()
-
-    reporter <- ProjectReporter$new(comm = comm)
+    # create reporter
+    reporter <- ProjectReporter$new()
     reporter$start_file('some name')
+    # setup and run tests
     env = testthat::test_env()
     tests <- substitute(test_expr)
     testthat::with_reporter(
