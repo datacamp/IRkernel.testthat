@@ -11,6 +11,12 @@ ProjectReporter <- R6::R6Class("ProjectReporter", inherit = testthat::ListReport
       super$initialize(...)
       self$all_tests = testthat:::Stack$new()
     },
+    add_result = function(context, test, result) {
+      super$add_result(context, test, result)
+      if (!testthat:::expectation_ok(result)) {
+        testthat::skip("")
+      }
+    },
     end_reporter = function() {
         test_res <- lapply(self$results$as_list(),
                            self$dump_test)
@@ -49,7 +55,7 @@ ProjectReporter <- R6::R6Class("ProjectReporter", inherit = testthat::ListReport
 
         list(name = test$test,
              message = message,
-             success = !any(res$failed, res$error),
+             success = success,
              outcome = outcome)
     }
   ),
