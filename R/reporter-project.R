@@ -57,6 +57,23 @@ ProjectReporter <- R6::R6Class("ProjectReporter", inherit = testthat::ListReport
              message = message,
              success = success,
              outcome = outcome)
+    },
+    print = function() {
+      end_report <- self$end_reporter()
+      summary <- end_report$summary
+      tests <- do.call(rbind, lapply(end_report$tests, data.frame, stringsAsFactors=FALSE))
+      tests <- tests[ ! tests$success,  ]
+      tests <- end_report$tests
+      cat("Tests:", summary$tests, ", Failures:", summary$failures, ", Errors: ", summary$errors, sep = "")
+      cat("\n")
+      for(i in seq_along(tests)) {
+        test <- tests[[i]]
+        if(test$success) next
+        cat(">", test$outcome, "::", test$name)
+        cat("\n")
+        cat( test$message, "\n---\n")
+      }
+      invisible(self)
     }
   ),
   private = list(
