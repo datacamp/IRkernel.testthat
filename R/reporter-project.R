@@ -61,8 +61,6 @@ ProjectReporter <- R6::R6Class("ProjectReporter", inherit = testthat::ListReport
     print = function() {
       end_report <- self$end_reporter()
       summary <- end_report$summary
-      tests <- do.call(rbind, lapply(end_report$tests, data.frame, stringsAsFactors=FALSE))
-      tests <- tests[ ! tests$success,  ]
       tests <- end_report$tests
       cat("Tests:", summary$tests, ", Failures:", summary$failures, ", Errors: ", summary$errors, sep = "")
       cat("\n")
