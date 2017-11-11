@@ -62,7 +62,7 @@ ProjectReporter <- R6::R6Class("ProjectReporter", inherit = testthat::ListReport
       end_report <- self$end_reporter()
       summary <- end_report$summary
       tests <- end_report$tests
-      cat("Tests:", summary$tests, ", Failures:", summary$failures, ", Errors: ", summary$errors, sep = "")
+      cat((summary$tests - summary$failures - summary$errors), "/", summary$tests, " tests passed",sep = "")
       cat("\n")
       for(i in seq_along(tests)) {
         test <- tests[[i]]
