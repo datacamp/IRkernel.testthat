@@ -46,7 +46,7 @@ ProjectReporter <- R6::R6Class("ProjectReporter", inherit = testthat::ListReport
             lapply(test$results, `[[`, 'message'),
             collapse = '\n')
 
-        res <- testthat:::sumarize_one_test_results(test)
+        res <- testthat:::summarize_one_test_results(test)
         success <- !any(res$failed, res$error)
         # figure out outcome, e.g. for counting errors later
         if (!success) {
