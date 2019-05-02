@@ -1,6 +1,6 @@
 Package: IRkernel.testthat
 Title: What the Package Does (one line, title case)
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: person("Michael", "Chow", email = "michael@datacamp.com", role = c("aut", "cre"))
 Description: Implements reporter for communicating testthat results to a jupyter client.
 License: All Rights Reserved
